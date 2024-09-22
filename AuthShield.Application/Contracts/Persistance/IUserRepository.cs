@@ -2,7 +2,7 @@
 
 namespace AuthShield.Application.Contracts.Persistance
 {
-    public interface IUserRepository : IRepository<User>
+    public interface IUserRepository : IRepository<ApplicationUser>
     {
     }
 }

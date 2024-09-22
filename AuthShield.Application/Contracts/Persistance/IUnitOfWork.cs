@@ -8,8 +8,8 @@ namespace AuthShield.Application.Contracts.Persistance
         Task CommitTransactionAsync();
         IRepository<TEntity> GetRepository<TEntity>(bool hasCustomRepository = false) where TEntity : class;
         Task RollbackTransactionAsync();
-        int SaveChanges(bool ensureAutoHistory = false);
-        Task<int> SaveChangesAsync(bool ensureAutoHistory = false);
+        int SaveChanges();
+        Task<int> SaveChangesAsync();
 
 
 

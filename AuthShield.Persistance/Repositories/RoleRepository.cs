@@ -1,12 +1,11 @@
 ﻿using AuthShield.Application.Contracts.Persistance;
-using AuthShield.Domain.Entities;
 using AuthShield.Persistance.Factories;
 
 namespace AuthShield.Persistance.Repositories
 {
-    public class UserRepository : Repository<ApplicationUser>, IUserRepository
+    public class RoleRepository : Repository<ApplicationRole>, IRoleRepository
     {
-        public UserRepository(IDbContextFactory<ApplicationDbContext> dBContextFactory) :
+        public RoleRepository(IDbContextFactory<ApplicationDbContext> dBContextFactory) :
             base(dBContextFactory.CreateDbContext())
         {
 

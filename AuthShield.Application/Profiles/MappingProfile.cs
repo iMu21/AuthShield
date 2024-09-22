@@ -8,7 +8,7 @@ namespace AuthShield.Application.Profiles
     {
         public MappingProfile()
         {
-            CreateMap<User, UserVm>();
+            CreateMap<ApplicationUser, UserVm>();
         }
     }
 }

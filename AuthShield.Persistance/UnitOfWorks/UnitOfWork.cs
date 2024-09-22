@@ -114,21 +114,13 @@ namespace AuthShield.Persistance.UnitOfWorks
 
         }
 
-        public int SaveChanges(bool ensureAutoHistory = false)
+        public int SaveChanges()
         {
-            if (ensureAutoHistory)
-            {
-                _dbContext.EnsureAutoHistory();
-            }
             return _dbContext.SaveChanges();
         }
 
-        public async Task<int> SaveChangesAsync(bool ensureAutoHistory = false)
+        public async Task<int> SaveChangesAsync()
         {
-            if (ensureAutoHistory)
-            {
-                _dbContext.EnsureAutoHistory();
-            }
             return await _dbContext.SaveChangesAsync();
         }
 

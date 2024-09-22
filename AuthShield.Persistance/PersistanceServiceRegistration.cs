@@ -26,6 +26,7 @@ namespace AuthShield.Persistance
             services.AddScoped<IUnitOfWork, UnitOfWork<TDbContext>>();
 
             services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IRoleRepository, RoleRepository>();
 
             return services;
         }

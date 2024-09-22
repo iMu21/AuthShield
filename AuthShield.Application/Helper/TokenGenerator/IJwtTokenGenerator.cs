@@ -1,7 +1,9 @@
-﻿namespace AuthShield.Application.Helper.TokenGenerator
+﻿using AuthShield.Domain.Entities;
+
+namespace AuthShield.Application.Helper.TokenGenerator
 {
     public interface IJwtTokenGenerator
     {
-        string GenerateToken(string email);
+        string GenerateToken(ApplicationUser user);
     }
 }

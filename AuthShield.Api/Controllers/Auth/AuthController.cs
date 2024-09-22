@@ -1,21 +1,25 @@
-﻿using AuthShield.Application.Contracts.Infrastructure;
+﻿using AuthShield.Application.Features.Auth.Command.LogIn;
+using AuthShield.Application.Features.Auth.Command.LogOut;
 using AuthShield.Application.Features.Auth.Command.RegisterUser;
 using AuthShield.Application.Features.Auth.Query.GetAllUsers;
+using AuthShield.Persistance;
 using MediatR;
-using Microsoft.AspNetCore.Components.Forms;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AuthShield.Api.Controllers.Auth
 {
-    [Route("api/client")]
+    [Route("api/auth")]
     [ApiController]
     public class AuthController : ControllerBase
     {
         protected readonly IMediator _mediator;
+        protected readonly ApplicationDbContext _context;
 
-        public AuthController(IMediator mediator)
+        public AuthController(IMediator mediator, ApplicationDbContext context)
         {
             _mediator = mediator;
+            _context = context;
         }
 
         [HttpPost("register-user", Name = "Create User")]
@@ -31,6 +35,24 @@ namespace AuthShield.Api.Controllers.Auth
         public async Task<ActionResult<object>> GetAllUsersAsync()
         {
             var result = await _mediator.Send(new GetAllUsersQuery());
+            return Ok(result);
+        }
+
+        [HttpPost("login", Name = "User Log In")]
+        [AllowAnonymous]
+        public async Task<IActionResult> Login([FromBody] LoginCommand loginCommand)
+        {
+            var result = await _mediator.Send(loginCommand);
+            if (result.IsSuccess)
+                return Ok(result);
+            return Unauthorized(result);
+        }
+
+        [HttpPost("logout")]
+        [Authorize]
+        public async Task<IActionResult> Logout([FromBody] LogoutCommand logoutCommand)
+        {
+            var result = await _mediator.Send(logoutCommand);
             return Ok(result);
         }
     }
