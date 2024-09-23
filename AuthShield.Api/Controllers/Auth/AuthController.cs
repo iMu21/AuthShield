@@ -1,6 +1,8 @@
-﻿using AuthShield.Application.Features.Auth.Command.LogIn;
+﻿using AuthShield.Application.Features.Auth.Command.ForgetPassword;
+using AuthShield.Application.Features.Auth.Command.LogIn;
 using AuthShield.Application.Features.Auth.Command.LogOut;
 using AuthShield.Application.Features.Auth.Command.RegisterUser;
+using AuthShield.Application.Features.Auth.Command.ResetPassword;
 using AuthShield.Application.Features.Auth.Query.GetAllUsers;
 using AuthShield.Persistance;
 using MediatR;
@@ -53,6 +55,22 @@ namespace AuthShield.Api.Controllers.Auth
         public async Task<IActionResult> Logout([FromBody] LogoutCommand logoutCommand)
         {
             var result = await _mediator.Send(logoutCommand);
+            return Ok(result);
+        }
+
+        [HttpPost("forgot-password", Name = "Forgot Password")]
+        [AllowAnonymous]
+        public async Task<IActionResult> ForgotPassword([FromBody] ForgetPasswordCommand forgotPasswordCommand)
+        {
+            var result = await _mediator.Send(forgotPasswordCommand);
+            return Ok(result);
+        }
+
+        [HttpPost("reset-password", Name = "Reset Password")]
+        [AllowAnonymous]
+        public async Task<IActionResult> ResetPassword([FromBody] ResetPasswordCommand resetPasswordCommand)
+        {
+            var result = await _mediator.Send(resetPasswordCommand);
             return Ok(result);
         }
     }

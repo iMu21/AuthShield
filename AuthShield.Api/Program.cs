@@ -1,4 +1,6 @@
 using AuthShield.Application;
+using AuthShield.Application.Constants;
+using AuthShield.Application.Providers;
 using AuthShield.Domain.Entities;
 using AuthShield.Infrastructure;
 using AuthShield.Persistance;
@@ -77,8 +79,13 @@ builder.Services.AddAuthentication(options =>
 });
 builder.Services.AddIdentity<ApplicationUser, ApplicationRole>()
     .AddEntityFrameworkStores<ApplicationDbContext>()
-    .AddDefaultTokenProviders();
+    .AddDefaultTokenProviders()
+    .AddTokenProvider<NumericPasswordResetTokenProvider<ApplicationUser>>(GlobalConstants.NumericPasswordResetTokenProvider); ;
 builder.Services.AddAuthorization();
+builder.Services.Configure<IdentityOptions>(options =>
+{
+    options.Tokens.PasswordResetTokenProvider = GlobalConstants.NumericPasswordResetTokenProvider;
+});
 
 var app = builder.Build();
 
