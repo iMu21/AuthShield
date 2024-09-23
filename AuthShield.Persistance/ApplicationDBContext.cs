@@ -45,6 +45,6 @@ namespace AuthShield.Persistance
 
         public DbSet<ApplicationUser> ApplicationUsers { get; set; }
         public DbSet<ApplicationRole> ApplicationRoles { get; set; }
-        public DbSet<PasswordResetToken> PasswordResetToken { get; set; }
+        public DbSet<PasswordResetToken> PasswordResetTokens { get; set; }
     }
 }
