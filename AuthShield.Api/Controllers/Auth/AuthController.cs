@@ -1,4 +1,4 @@
-﻿using AuthShield.Application.Features.Auth.Command.ForgetPassword;
+﻿using AuthShield.Application.Features.Auth.Command.ForgotPassword;
 using AuthShield.Application.Features.Auth.Command.LogIn;
 using AuthShield.Application.Features.Auth.Command.LogOut;
 using AuthShield.Application.Features.Auth.Command.RegisterUser;
@@ -60,7 +60,7 @@ namespace AuthShield.Api.Controllers.Auth
 
         [HttpPost("forgot-password", Name = "Forgot Password")]
         [AllowAnonymous]
-        public async Task<IActionResult> ForgotPassword([FromBody] ForgetPasswordCommand forgotPasswordCommand)
+        public async Task<IActionResult> ForgotPassword([FromBody] ForgotPasswordCommand forgotPasswordCommand)
         {
             var result = await _mediator.Send(forgotPasswordCommand);
             return Ok(result);

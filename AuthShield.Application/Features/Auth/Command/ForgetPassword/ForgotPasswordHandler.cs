@@ -5,25 +5,25 @@ using AuthShield.Domain.Entities;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
 
-namespace AuthShield.Application.Features.Auth.Command.ForgetPassword
+namespace AuthShield.Application.Features.Auth.Command.ForgotPassword
 {
-    public class ForgetPasswordHandler : IRequestHandler<ForgetPasswordCommand, ForgetPasswordResponse>
+    public class ForgotPasswordHandler : IRequestHandler<ForgotPasswordCommand, ForgotPasswordResponse>
     {
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly IEmailService _emailService;
 
-        public ForgetPasswordHandler(UserManager<ApplicationUser> userManager, IEmailService emailService)
+        public ForgotPasswordHandler(UserManager<ApplicationUser> userManager, IEmailService emailService)
         {
             _userManager = userManager;
             _emailService = emailService;
         }
 
-        public async Task<ForgetPasswordResponse> Handle(ForgetPasswordCommand command, CancellationToken cancellationToken)
+        public async Task<ForgotPasswordResponse> Handle(ForgotPasswordCommand command, CancellationToken cancellationToken)
         {
             var user = await _userManager.FindByEmailAsync(command.Email);
             if (user == null)
             {
-                return new ForgetPasswordResponse
+                return new ForgotPasswordResponse
                 {
                     IsSuccess = false,
                     Message = "User not found"
@@ -41,7 +41,7 @@ namespace AuthShield.Application.Features.Auth.Command.ForgetPassword
 
             await _emailService.SendEmailAsync(email);
 
-            return new ForgetPasswordResponse
+            return new ForgotPasswordResponse
             {
                 IsSuccess = true,
                 Message = "Password reset token has been sent to your email successfully"
