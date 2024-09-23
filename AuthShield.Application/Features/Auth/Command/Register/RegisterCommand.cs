@@ -2,7 +2,7 @@
 
 namespace AuthShield.Application.Features.Auth.Command.RegisterUser
 {
-    public class RegisterUserCommand : IRequest<RegisterUserResponse>
+    public class RegisterCommand : IRequest<RegisterResponse>
     {
         public string FirstName { get; set; } = string.Empty;
         public string LastName { get; set; } = string.Empty;

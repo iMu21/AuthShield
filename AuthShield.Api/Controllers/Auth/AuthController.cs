@@ -24,7 +24,7 @@ namespace AuthShield.Api.Controllers.Auth
 
         [HttpPost("register-user", Name = "Create User")]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<ActionResult<object>> RegisterUserAsync(RegisterUserCommand command)
+        public async Task<ActionResult<object>> RegisterUserAsync(RegisterCommand command)
         {
             var result = await _mediator.Send(command);
             return Ok(result);

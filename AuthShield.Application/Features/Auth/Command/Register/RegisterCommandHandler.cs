@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Identity;
 
 namespace AuthShield.Application.Features.Auth.Command.RegisterUser
 {
-    public class RegisterCommandHandler : IRequestHandler<RegisterUserCommand, RegisterUserResponse>
+    public class RegisterCommandHandler : IRequestHandler<RegisterCommand, RegisterResponse>
     {
         private readonly IJwtTokenGenerator _jwtTokenGenerator;
         private readonly UserManager<ApplicationUser> _userManager;
@@ -16,7 +16,7 @@ namespace AuthShield.Application.Features.Auth.Command.RegisterUser
             _userManager = userManager;
         }
 
-        public async Task<RegisterUserResponse> Handle(RegisterUserCommand command, CancellationToken cancellationToken)
+        public async Task<RegisterResponse> Handle(RegisterCommand command, CancellationToken cancellationToken)
         {
             var existingUser = await _userManager.FindByEmailAsync(command.Email);
             if (existingUser != null)
@@ -41,7 +41,7 @@ namespace AuthShield.Application.Features.Auth.Command.RegisterUser
 
             var token = _jwtTokenGenerator.GenerateToken(user);
 
-            return new RegisterUserResponse { Email = user.Email, Token = token };
+            return new RegisterResponse { Email = user.Email, Token = token };
         }
 
     }
