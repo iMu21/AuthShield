@@ -6,9 +6,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace AuthShield.Persistance
 {
-    public class ApplicationDbContext: IdentityDbContext<ApplicationUser, ApplicationRole, string>
+    public class ApplicationDbContext : IdentityDbContext<ApplicationUser, ApplicationRole, string>
     {
-        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options): base(options)
+        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
         {
 
         }
@@ -18,6 +18,11 @@ namespace AuthShield.Persistance
             base.OnModelCreating(modelBuilder);
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(ApplicationDbContext).Assembly);
             modelBuilder.Entity<IdentityUserLogin<string>>().HasKey(l => new { l.LoginProvider, l.ProviderKey });
+            modelBuilder.Entity<PasswordResetToken>()
+                .HasOne(p => p.User)
+                .WithMany()
+                .HasForeignKey(p => p.UserId)
+                .OnDelete(DeleteBehavior.Cascade);
         }
 
         public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
@@ -32,7 +37,7 @@ namespace AuthShield.Persistance
                 else if (entry.State == EntityState.Modified)
                 {
                     entry.Entity.LastModifiedDateUtc = DateTime.UtcNow;
-                } 
+                }
             }
 
             return base.SaveChangesAsync(cancellationToken);
@@ -40,5 +45,6 @@ namespace AuthShield.Persistance
 
         public DbSet<ApplicationUser> ApplicationUsers { get; set; }
         public DbSet<ApplicationRole> ApplicationRoles { get; set; }
+        public DbSet<PasswordResetToken> PasswordResetToken { get; set; }
     }
 }
